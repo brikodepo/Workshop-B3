@@ -4,6 +4,8 @@ import Loader from './components/loader';
 import Homepage from './components/homepage';
 import Team from './components/team';
 import Sidebar from './components/sidebar';
+import './index.css';
+import 'leaflet/dist/leaflet.css';
 
 function App() {
   return (
