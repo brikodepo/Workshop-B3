@@ -1,15 +1,17 @@
 import React from 'react';
 import {MapContainer, ImageOverlay, Marker, Popup} from 'react-leaflet';
 import L from 'leaflet';
-import planZero from '../images/plan_zero.png';
+import planZero from '../images/plan_zero_f.png';
+import "../map.style.css"
+
 
 const limite = [[0, 0], [1000, 1000]]; // coordonnees de la map enn fonction de l'image
 
-const buildMap = () => {
+const BuildMap = () => {
     return (
         <MapContainer
-            limite = {limite}
-            style = {{ height: "600px", width: "100%" }} // a changer le px en vh ou em 
+            bounds = {limite}
+            style = {{ height: "100%", width: "100%" }} // a changer le px en vh ou em 
             zoomControl = {true} // controle du zoom
             maxZoom = {3}
             minZoom = {-1}
@@ -17,7 +19,7 @@ const buildMap = () => {
 {/*******************************Chargement du plan image******************************************************/}
             <ImageOverlay
                 url = {planZero}
-                limite = {limite} 
+                bounds = {limite} 
             />
 
 
@@ -33,4 +35,4 @@ const buildMap = () => {
     )
 }
 
-export default buildMap;
+export default BuildMap;
