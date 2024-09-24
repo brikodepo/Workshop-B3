@@ -6,16 +6,12 @@ const Team = () => {
     <>
       <div>
         <Navbar />
-        <section className="text-gray-800">
-          <div className="max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16">
-            <div className="max-w-xl">
-              <h2 className="text-xl font-bold sm:text-2xl">
+        <section className="text-gray-800 mt-12">
+        <div className="mx-auto px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16 max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16 block p-6 bg-white border border-gray-200 rounded-lg shadow-sm :bg-gray-100 dark:bg-gray-800 dark:border-gray-700">
+          <div className="max-w-xl">
+            <h2 className="text-xl font-bold sm:text-2xl">
                 Equipe de production
               </h2>
-
-              <p className="mt-4 text-gray-800">
-                Notre équipe de production est composée de différents profils :
-              </p>
             </div>
 
             <div className="mt-8 grid grid-cols-1 gap-8 md:mt-16 md:grid-cols-2 md:gap-12 lg:grid-cols-3">

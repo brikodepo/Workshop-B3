@@ -4,7 +4,7 @@ const Navbar = () => {
     const [state, setState] = useState(false);
 
     const navigation = [
-      { title: "Accueil", path: "/" },
+      { title: "Accueil", path: "/mainpage" },
       { title: "Plan interactif", path: "/homepage" },
       { title: "Equipe de production", path: "/team" },
     ];
