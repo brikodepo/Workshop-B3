@@ -14,10 +14,12 @@ const buildMap = () => {
             minZoom = {-1}
         >
 {/*******************************Chargement du plan image******************************************************/}
-            <ImageOverlay>
-                url = "./images/" 
+            <ImageOverlay
+                url = "./images/plan_zero.png"
                 limite = {limite} 
-            </ImageOverlay>
+            />
+
+
 
 {/********************************Mise en place des points*****************************************************/}
             <Marker position={[500, 500]}>
