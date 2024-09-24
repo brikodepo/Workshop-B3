@@ -1,6 +1,7 @@
 import React from 'react';
 import {MapContainer, ImageOverlay, Marker, Popup} from 'react-leaflet';
 import L from 'leaflet';
+import planZero from '../images/plan_zero.png';
 
 const limite = [[0, 0], [1000, 1000]]; // coordonnees de la map enn fonction de l'image
 
@@ -15,7 +16,7 @@ const buildMap = () => {
         >
 {/*******************************Chargement du plan image******************************************************/}
             <ImageOverlay
-                url = "./images/plan_zero.png"
+                url = {planZero}
                 limite = {limite} 
             />
 

@@ -91,6 +91,9 @@ const Homepage = () => {
         </div>
       </nav>
       <section>
+        <div className ="bg-slate-300 size-96">
+                <buildMap />
+        </div>
         <SideBar />
       </section>
     </div>
