@@ -1,5 +1,9 @@
 @import 'leaflet/dist/leaflet.css';
 
+.custom-overlay {
+  object-fit: contain;
+}
+
 .leaflet-container {
     height: 400px;
     width: 50%;
