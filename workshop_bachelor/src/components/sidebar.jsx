@@ -152,15 +152,15 @@ const SideBar = () => {
 
   return (
     <>
-      <nav className="right-0 w-auto h-full border-l bg-white space-y-8 sm:w-80 bg-grey-100">
+      <nav className="right-0 w-full h-full border-l bg-white space-y-8 bg-grey-100">
         <div class="flex flex-col h-full">
           <div className="flex-1 flex flex-col h-full overflow-auto">
-            <ul className="px-4 text-sm font-medium flex-1">
+            <ul className="px-4 text-sm font-medium flex-1 mt-8">
               {navigation.map((item, idx) => (
                 <li key={idx}>
                   <a
                     href={item.href}
-                    className="flex items-center gap-x-2 text-gray-600 p-2 rounded-lg hover:bg-gray-50 active:bg-gray-100 duration-150"
+                    className="flex items-center gap-x-2 text-gray-800 p-2 rounded-lg hover:bg-gray-50 active:bg-gray-100 duration-150"
                   >
                     <div className="text-gray-500">{item.icon}</div>
                     {item.name}
@@ -174,7 +174,7 @@ const SideBar = () => {
                   <li key={idx}>
                     <a
                       href={item.href}
-                      className="flex items-center gap-x-2 text-gray-600 p-2 rounded-lg hover:bg-gray-50 active:bg-gray-100 duration-150"
+                      className="flex items-center gap-x-2 text-gray-800 p-2 rounded-lg hover:bg-gray-50 active:bg-gray-100 duration-150"
                     >
                       <div className="text-gray-500">{item.icon}</div>
                       {item.name}
