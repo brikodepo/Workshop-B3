@@ -152,7 +152,7 @@ const SideBar = () => {
 
   return (
     <>
-      <nav className="fixed right-0 w-auto h-full border-l bg-white space-y-8 sm:w-80 bg-grey-100">
+      <nav className="right-0 w-auto h-full border-l bg-white space-y-8 sm:w-80 bg-grey-100">
         <div class="flex flex-col h-full">
           <div className="flex-1 flex flex-col h-full overflow-auto">
             <ul className="px-4 text-sm font-medium flex-1">
