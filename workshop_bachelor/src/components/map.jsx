@@ -63,7 +63,7 @@ const BuildMap = () => {
             bounds={limite}
             maxBounds={limite}
             maxBoundsViscosity={1.0}
-            style={{ height: "100vh", width: "100%" }} 
+            style={{ height: "100%", width: "100%" }} 
             zoomControl={true}
             zoom={1}
             maxZoom={3}
@@ -83,8 +83,10 @@ const BuildMap = () => {
                     Blablablablabla
                 </Popup>
             </Marker>
+
             <ZoomControlDrag minZoom={1} maxZoom={3} />
             <ResetViewOnZoom initialCenter={position} initialZoom={initialZoom} />
+
         </MapContainer>
     );
 }
