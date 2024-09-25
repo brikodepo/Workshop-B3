@@ -6,7 +6,7 @@ const MainPage = () => {
     <div>
       <Navbar />
       <section className="text-gray-800 mt-12">
-        <div className="mx-auto px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16 max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16 block p-6 bg-white border border-gray-200 rounded-lg shadow-sm :bg-gray-100 dark:bg-gray-800 dark:border-gray-700">
+        <div className="mx-auto px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16 max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 lg:py-16 block p-6 bg-white border border-gray-200 rounded-lg shadow-sm :bg-gray-100">
           <div className="max-w-xl">
             <h2 className="text-xl font-bold sm:text-2xl">
               Projet Workshop session B3 2024-2025
