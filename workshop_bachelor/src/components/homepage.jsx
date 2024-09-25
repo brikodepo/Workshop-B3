@@ -1,6 +1,5 @@
 import Footer from "./footer";
 import Navbar from "./navbar";
-import SideBar from "./sidebar";
 import BuildMap from "./map";
 
 const Homepage = () => {

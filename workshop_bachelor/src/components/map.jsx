@@ -68,10 +68,31 @@ const customIcon = new L.Icon({
 });
 
  {/******************************* ajout images plan ******************************************************/}
-
 const floors = {
     ground: planZero,
     first: planUn,
+    //second: planTwo
+};
+
+
+ {/******************************* ajout markers reactif ******************************************************/}
+const markers ={
+    ground:[
+        { position: [10, 752], popup: "Marker 1 on Ground" },
+        { position: [100, 800], popup: "Marker 2 on Ground" },
+    ],
+    first:[
+        { position: [17, 933], popup: "Marker 1 on First" },
+        { position: [17, 875], popup: "Marker 2 on First" },
+        { position: [17, 819], popup: "Marker 3 on First" },
+        { position: [17, 763], popup: "Marker 4 on First" },
+        { position: [17, 719], popup: "Marker 5 on First" },
+        { position: [17, 673], popup: "Marker 6 on First" },
+        { position: [17, 610], popup: "Marker 7 on First" },
+        { position: [17, 559], popup: "Marker 8 on First" },
+        { position: [17, 522], popup: "Marker 9 on First" },
+        { position: [17, 933], popup: "Marker 10 on First" },
+    ],
 };
 
 {/******************************* afficher la carte et la generer******************************************************/}
@@ -109,11 +130,11 @@ const BuildMap = () => {
                     />
 
 {/******************************** Mise en place des points *****************************************************/}
-                    <Marker position={[10, 752]} icon={customIcon}>
-                        <Popup>
-                            Blablablablabla
-                        </Popup>
+                {markers[currentFloor].map((marker, index) => (
+                    <Marker key={index} position={marker.position} icon={customIcon}>
+                        <Popup>{marker.popup}</Popup>
                     </Marker>
+                ))}
 
                     <ZoomControlDrag minZoom={1} maxZoom={3} />
                     <ResetViewOnZoom initialCenter={position} initialZoom={initialZoom} />
