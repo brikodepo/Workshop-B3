@@ -8,13 +8,13 @@ const Homepage = () => {
   return (
     <div>
       <Navbar />
-      <section className="h-auto">
-        <div className="flex h-auto">
-          <div className ="flex-grow leaflet-container">
+      <section >
+        <div>
+          <div>
             <BuildMap />
           </div>
-          <div className="w-32 sm:w-64">
-            <SideBar />
+          <div>
+            
           </div>
         </div>
       </section>
