@@ -1,4 +1,4 @@
-const SideBar = () => {
+const SideBar = ({setCurrentFloor}) => {
   const navigation = [
     {
       href: "",
@@ -19,6 +19,7 @@ const SideBar = () => {
           />
         </svg>
       ),
+      floor: "ground",
     },
     {
       href: "",
@@ -39,6 +40,7 @@ const SideBar = () => {
           />
         </svg>
       ),
+      floor: "ground",
     },
     {
       href: "",
@@ -59,6 +61,7 @@ const SideBar = () => {
           />
         </svg>
       ),
+      floor: 'first',
     },
     {
       href: "",
@@ -79,6 +82,7 @@ const SideBar = () => {
           />
         </svg>
       ),
+      floor: 'ground',
     },
   ];
 
@@ -158,13 +162,14 @@ const SideBar = () => {
             <ul className="px-4 text-sm font-medium flex-1 mt-8">
               {navigation.map((item, idx) => (
                 <li key={idx}>
-                  <a
+                  <button
                     href={item.href}
+                    onClick={() => setCurrentFloor(item.floor)}
                     className="flex items-center gap-x-2 text-gray-800 p-2 rounded-lg hover:bg-gray-50 active:bg-gray-100 duration-150"
                   >
                     <div className="text-gray-500">{item.icon}</div>
                     {item.name}
-                  </a>
+                  </button>
                 </li>
               ))}
             </ul>
