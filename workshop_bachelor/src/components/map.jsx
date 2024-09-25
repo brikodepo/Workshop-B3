@@ -1,53 +1,74 @@
-import React, { useEffect, useRef } from 'react';
-import { MapContainer, ImageOverlay, Marker, Popup } from 'react-leaflet';
+import React, { useEffect } from 'react';
+import { MapContainer, ImageOverlay, Marker, Popup, useMap } from 'react-leaflet';
 import planZero from '../images/plan_zero.png';
 import "../map.style.css";
 
 const limite = [[0, 0], [375, 1504]]; // Coordonnées de la carte en fonction de l'image
+const position = [1500, 755];
 
-const BuildMap = () => {
-    const mapRef = useRef();
+ {/******************************* gerer le dragger ******************************************************/}
+const ZoomControlDrag = ({ minZoom, maxZoom }) => {
+    const map = useMap();
 
     useEffect(() => {
-        const map = mapRef.current;
-
-        if (map) {
-            // Vérifier le zoom initial et désactiver le dragging si nécessaire
+        const handleZoom = () => {
             const currentZoom = map.getZoom();
-            if (currentZoom === 1) {
-                map.dragging.disable();
+            if (currentZoom > minZoom) {
+                map.dragging.enable();  // Activer le drag si zoom est sup à minZoom
+            } else {
+                map.dragging.disable();  // Désactiver le drag si zoom est égal à minZoom
             }
+        };
 
-            // Gérer l'activation ou la désactivation du drag au changement de zoom
+        map.on('zoomend', handleZoom);
+
+        map.dragging.disable();
+
+        return () => {
+            map.off('zoomend', handleZoom);
+        };
+    }, [map, minZoom]);
+
+    return null;
+};
+
+ {/******************************* gerer le repositionement de l'image ******************************************************/}
+const initialZoom = 1; 
+
+    const ResetViewOnZoom = ({ initialCenter, initialZoom }) => {
+        const map = useMap();
+
+        useEffect(() => {
             const handleZoomEnd = () => {
                 const currentZoom = map.getZoom();
-                if (currentZoom > 1) {
-                    map.dragging.enable(); // Activer le drag quand le zoom est > 1
-                } else {
-                    map.dragging.disable(); // Désactiver le drag quand le zoom est à 1
-                }
-            };
+                if (currentZoom === initialZoom) {
+                    map.setView(initialCenter, initialZoom);  
+            }
+        };
 
-            map.on('zoomend', handleZoomEnd);
+        map.on('zoomend', handleZoomEnd);
 
-            // Nettoyer l'événement à la désinstallation du composant
-            return () => {
-                map.off('zoomend', handleZoomEnd);
-            };
-        }
-    }, []);
+        return () => {
+            map.off('zoomend', handleZoomEnd);
+        };
+    }, [map, initialCenter, initialZoom]); 
+    return null;
+};
 
+
+const BuildMap = () => {
     return (
         <MapContainer
-            whenCreated={mapInstance => mapRef.current = mapInstance} // Assigner l'instance de la carte à la référence
+            center = {position}
             bounds={limite}
             maxBounds={limite}
             maxBoundsViscosity={1.0}
-            style={{ height: "100%", width: "100%" }} // 100vh pour occuper toute la hauteur
+            style={{ height: "100vh", width: "100%" }} 
             zoomControl={true}
             zoom={1}
             maxZoom={3}
             minZoom={1}
+            //dragging = {false}
         >
             {/******************************* Chargement du plan image ******************************************************/}
             <ImageOverlay
@@ -62,6 +83,8 @@ const BuildMap = () => {
                     Blablablablabla
                 </Popup>
             </Marker>
+            <ZoomControlDrag minZoom={1} maxZoom={3} />
+            <ResetViewOnZoom initialCenter={position} initialZoom={initialZoom} />
         </MapContainer>
     );
 }
