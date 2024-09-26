@@ -1,8 +1,5 @@
 const db = require('../config/db');
 
-const dotenv = require('dotenv');
-dotenv.config();
-
 // Créer un rôle
 exports.createRole = (req, res) => {
     const { role_rank } = req.body;
