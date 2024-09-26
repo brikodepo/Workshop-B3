@@ -78,8 +78,18 @@ const floors = {
  {/******************************* ajout markers reactif ******************************************************/}
 const markers ={
     ground:[
-        { position: [10, 752], popup: "Marker 1 on Ground" },
-        { position: [100, 800], popup: "Marker 2 on Ground" },
+        { position: [15, 732], popup: "Marker 1 on Ground" },
+        { position: [15, 785], popup: "Marker 2 on Ground" },
+        { position: [15, 687], popup: "Marker 3 on Ground" },
+        { position: [25, 623], popup: "Marker 2 on Ground" },
+        { position: [15, 833], popup: "Marker 2 on Ground" },
+        { position: [15, 885], popup: "Marker 2 on Ground" },
+        { position: [15, 965], popup: "Marker 2 on Ground" },
+        { position: [25, 1050], popup: "Marker 2 on Ground" },
+        { position: [55, 963], popup: "Marker 2 on Ground" },
+        { position: [77, 845], popup: "Marker 2 on Ground" },
+        { position: [60, 540], popup: "Marker 2 on Ground" },
+
     ],
     first:[
         { position: [17, 933], popup: "Marker 1 on First" },
