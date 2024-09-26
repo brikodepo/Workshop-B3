@@ -86,12 +86,12 @@ const floors = {
  {/******************************* ajout markers reactif ******************************************************/}
 const markers ={
     ground:[
-        { position: [15, 732], popup: "Marker 1 on Ground", isToilet: true  },
-        { position: [15, 785], popup: "Marker 2 on Ground", isToilet: true },
-        { position: [15, 687], popup: "Marker 3 on Ground" , isToilet: false},
-        { position: [25, 623], popup: "Marker 2 on Ground", isToilet: false },
-        { position: [15, 833], popup: "Marker 2 on Ground", isToilet: false },
-        { position: [15, 885], popup: "Marker 2 on Ground", isToilet: false },
+        { position: [15, 732], popup: "Marker 1 on Ground", isToilet: true, id: 1 },
+        { position: [15, 785], popup: "Marker 2 on Ground", isToilet: true, id: 2 },
+        { position: [15, 687], popup: "Marker 3 on Ground" , isToilet: false, id: 3},
+        { position: [25, 623], popup: "Marker 2 on Ground", isToilet: false, id: 4 },
+        { position: [15, 833], popup: "Marker 2 on Ground", isToilet: false, id: 5 },
+        { position: [15, 885], popup: "Marker 2 on Ground", isToilet: false, id: 6 },
         { position: [15, 965], popup: "Marker 2 on Ground", isToilet: false },
         { position: [25, 1050], popup: "Marker 2 on Ground", isToilet: false },
         { position: [55, 963], popup: "Marker 2 on Ground", isToilet: false },
@@ -118,11 +118,23 @@ const markers ={
 const BuildMap = () => {
 
     const [currentFloor, setCurrentFloor] = useState('ground');
+    const [salles, setSalles] = useState([]);
 
     useEffect(() => {
-        console.log("Current floor: ", currentFloor);
-    }, [currentFloor]);
-    console.log(planZero, planUn);
+        // Recup salle via api
+        const fetchSalles = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/api/salles');
+                const data = await response.json();
+                setSalles(data);
+            } catch (error) {
+                console.error("Erreur lors de la récupération des salles : ", error);
+            }
+        };
+
+        fetchSalles();
+    }, []);
+
 
     return (
         <section className="h-auto">
@@ -148,16 +160,18 @@ const BuildMap = () => {
                     />
 
 {/******************************** Mise en place des points *****************************************************/}
-                {markers[currentFloor].map((marker, index) => (
+                {markers[currentFloor].map((marker, index) => {
+                    const salle = salles.find(s => s.id_salle === marker.id); 
+                    return (
                     <Marker 
                         key={index} 
                         position={marker.position} 
-                        icon={marker.isToilet ? toiletIcon : customIcon} // Choisir l'icône en fonction de isToilet
+                        icon={marker.isToilet ? toiletIcon : customIcon}
                     >
-                        <Popup>{marker.popup}</Popup>
+                        <Popup>{salle ? salle.nom_salle : "Salle non trouvée"}</Popup>
                     </Marker>
-                ))}
-
+                    );
+                })}
                     <ZoomControlDrag minZoom={1} maxZoom={3} />
                     <ResetViewOnZoom initialCenter={position} initialZoom={initialZoom} />
 
