@@ -6,6 +6,7 @@ import planZero from '../images/plan_zero.png';
 import planUn from '../images/plan_un.png';
 import "../map.style.css";
 import CusIcon from '../images/icon_map.png';
+import IconT from '../images/toilettes.png';
 
 const limite = [[0, 0], [375, 1504]]; // Coordonnées de la carte en fonction de l'image
 const position = [1500, 755];
@@ -67,6 +68,13 @@ const customIcon = new L.Icon({
     popupAnchor: [0, -40] 
 });
 
+const toiletIcon = new L.Icon({
+    iconUrl: IconT,
+    iconSize:[20,20],
+    iconAnchor: [10,20],
+    popupAnchor: [0, -40] 
+});
+
  {/******************************* ajout images plan ******************************************************/}
 const floors = {
     ground: planZero,
@@ -78,17 +86,17 @@ const floors = {
  {/******************************* ajout markers reactif ******************************************************/}
 const markers ={
     ground:[
-        { position: [15, 732], popup: "Marker 1 on Ground" },
-        { position: [15, 785], popup: "Marker 2 on Ground" },
-        { position: [15, 687], popup: "Marker 3 on Ground" },
-        { position: [25, 623], popup: "Marker 2 on Ground" },
-        { position: [15, 833], popup: "Marker 2 on Ground" },
-        { position: [15, 885], popup: "Marker 2 on Ground" },
-        { position: [15, 965], popup: "Marker 2 on Ground" },
-        { position: [25, 1050], popup: "Marker 2 on Ground" },
-        { position: [55, 963], popup: "Marker 2 on Ground" },
-        { position: [77, 845], popup: "Marker 2 on Ground" },
-        { position: [60, 540], popup: "Marker 2 on Ground" },
+        { position: [15, 732], popup: "Marker 1 on Ground", isToilet: true  },
+        { position: [15, 785], popup: "Marker 2 on Ground", isToilet: true },
+        { position: [15, 687], popup: "Marker 3 on Ground" , isToilet: false},
+        { position: [25, 623], popup: "Marker 2 on Ground", isToilet: false },
+        { position: [15, 833], popup: "Marker 2 on Ground", isToilet: false },
+        { position: [15, 885], popup: "Marker 2 on Ground", isToilet: false },
+        { position: [15, 965], popup: "Marker 2 on Ground", isToilet: false },
+        { position: [25, 1050], popup: "Marker 2 on Ground", isToilet: false },
+        { position: [55, 963], popup: "Marker 2 on Ground", isToilet: false },
+        { position: [77, 845], popup: "Marker 2 on Ground", isToilet: false },
+        { position: [60, 540], popup: "Marker 2 on Ground", isToilet: false },
 
     ],
     first:[
@@ -141,7 +149,11 @@ const BuildMap = () => {
 
 {/******************************** Mise en place des points *****************************************************/}
                 {markers[currentFloor].map((marker, index) => (
-                    <Marker key={index} position={marker.position} icon={customIcon}>
+                    <Marker 
+                        key={index} 
+                        position={marker.position} 
+                        icon={marker.isToilet ? toiletIcon : customIcon} // Choisir l'icône en fonction de isToilet
+                    >
                         <Popup>{marker.popup}</Popup>
                     </Marker>
                 ))}
