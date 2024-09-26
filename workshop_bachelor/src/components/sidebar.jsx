@@ -40,7 +40,7 @@ const SideBar = ({setCurrentFloor}) => {
           />
         </svg>
       ),
-      floor: "ground",
+      floor: "second",
     },
     {
       href: "",
