@@ -1,8 +1,5 @@
 const db = require('../config/db');
 
-const dotenv = require('dotenv');
-dotenv.config();
-
 // Créer un utilisateur
 exports.createUser = (req, res) => {
     const { nom, prenom, id_roles_role_rank, pwd } = req.body;
