@@ -16,7 +16,11 @@ exports.createSalle = (req, res) => {
 
 // Récupérer toutes les salles
 exports.getAllSalles = (req, res) => {
-    const query = 'SELECT * FROM salles';
+    const query = `
+        SELECT salles.id_salle, salles.nom_salle, taille.taille
+        FROM salles
+        JOIN taille ON salles.taille_salle = taille.id_taille
+    `;
     db.query(query, (err, results) => {
         if (err) {
             return res.status(500).json({ error: err });
