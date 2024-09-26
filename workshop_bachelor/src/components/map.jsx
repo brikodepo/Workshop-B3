@@ -168,7 +168,14 @@ const BuildMap = () => {
                         position={marker.position} 
                         icon={marker.isToilet ? toiletIcon : customIcon}
                     >
-                        <Popup>{salle ? salle.nom_salle : "Salle non trouvée"}</Popup>
+                        <Popup>
+                            {salle ? (
+                                <>
+                                    <strong>{salle.nom_salle}</strong><br />
+                                    Taille: {salle.taille}
+                                </>
+                            ) : "Salle non trouvée"}
+                        </Popup>
                     </Marker>
                     );
                 })}
