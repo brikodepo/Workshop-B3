@@ -1,69 +1,155 @@
-import React, { useEffect, useRef } from 'react';
-import { MapContainer, ImageOverlay, Marker, Popup } from 'react-leaflet';
+import React, { useEffect, useState } from 'react';
+import { MapContainer, ImageOverlay, Marker, Popup, useMap } from 'react-leaflet';
+import L from 'leaflet';
+import SideBar from './sidebar';
 import planZero from '../images/plan_zero.png';
+import planUn from '../images/plan_un.png';
 import "../map.style.css";
+import CusIcon from '../images/icon_map.png';
 
 const limite = [[0, 0], [375, 1504]]; // Coordonnées de la carte en fonction de l'image
+const position = [1500, 755];
 
-const BuildMap = () => {
-    const mapRef = useRef();
+ {/******************************* gerer le dragger ******************************************************/}
+const ZoomControlDrag = ({ minZoom, maxZoom }) => {
+    const map = useMap();
 
     useEffect(() => {
-        const map = mapRef.current;
-
-        if (map) {
-            // Vérifier le zoom initial et désactiver le dragging si nécessaire
+        const handleZoom = () => {
             const currentZoom = map.getZoom();
-            if (currentZoom === 1) {
-                map.dragging.disable();
+            if (currentZoom > minZoom) {
+                map.dragging.enable();  // Activer le drag si zoom est sup à minZoom
+            } else {
+                map.dragging.disable();  // Désactiver le drag si zoom est égal à minZoom
             }
+        };
 
-            // Gérer l'activation ou la désactivation du drag au changement de zoom
+        map.on('zoomend', handleZoom);
+
+        map.dragging.disable();
+
+        return () => {
+            map.off('zoomend', handleZoom);
+        };
+    }, [map, minZoom]);
+
+    return null;
+};
+
+ {/******************************* gerer le repositionement de l'image ******************************************************/}
+const initialZoom = 1; 
+
+    const ResetViewOnZoom = ({ initialCenter, initialZoom }) => {
+        const map = useMap();
+
+        useEffect(() => {
             const handleZoomEnd = () => {
                 const currentZoom = map.getZoom();
-                if (currentZoom > 1) {
-                    map.dragging.enable(); // Activer le drag quand le zoom est > 1
-                } else {
-                    map.dragging.disable(); // Désactiver le drag quand le zoom est à 1
-                }
-            };
+                if (currentZoom === initialZoom) {
+                    map.setView(initialCenter, initialZoom);  
+            }
+        };
 
-            map.on('zoomend', handleZoomEnd);
+        map.on('zoomend', handleZoomEnd);
 
-            // Nettoyer l'événement à la désinstallation du composant
-            return () => {
-                map.off('zoomend', handleZoomEnd);
-            };
-        }
-    }, []);
+        return () => {
+            map.off('zoomend', handleZoomEnd);
+        };
+    }, [map, initialCenter, initialZoom]); 
+    return null;
+};
+ {/******************************* ajout icon map ******************************************************/}
+
+const customIcon = new L.Icon({
+    iconUrl: CusIcon,
+    iconSize:[20,20],
+    iconAnchor: [10,20],
+    popupAnchor: [0, -40] 
+});
+
+ {/******************************* ajout images plan ******************************************************/}
+const floors = {
+    ground: planZero,
+    first: planUn,
+    //second: planTwo
+};
+
+
+ {/******************************* ajout markers reactif ******************************************************/}
+const markers ={
+    ground:[
+        { position: [10, 752], popup: "Marker 1 on Ground" },
+        { position: [100, 800], popup: "Marker 2 on Ground" },
+    ],
+    first:[
+        { position: [17, 933], popup: "Marker 1 on First" },
+        { position: [17, 875], popup: "Marker 2 on First" },
+        { position: [17, 819], popup: "Marker 3 on First" },
+        { position: [17, 763], popup: "Marker 4 on First" },
+        { position: [17, 719], popup: "Marker 5 on First" },
+        { position: [17, 673], popup: "Marker 6 on First" },
+        { position: [17, 610], popup: "Marker 7 on First" },
+        { position: [17, 559], popup: "Marker 8 on First" },
+        { position: [17, 522], popup: "Marker 9 on First" },
+        { position: [17, 933], popup: "Marker 10 on First" },
+    ],
+};
+
+{/******************************* afficher la carte et la generer******************************************************/}
+
+const BuildMap = () => {
+
+    const [currentFloor, setCurrentFloor] = useState('ground');
+
+    useEffect(() => {
+        console.log("Current floor: ", currentFloor);
+    }, [currentFloor]);
+    console.log(planZero, planUn);
 
     return (
-        <MapContainer
-            whenCreated={mapInstance => mapRef.current = mapInstance} // Assigner l'instance de la carte à la référence
-            bounds={limite}
-            maxBounds={limite}
-            maxBoundsViscosity={1.0}
-            style={{ height: "100%", width: "100%" }} // 100vh pour occuper toute la hauteur
-            zoomControl={true}
-            zoom={1}
-            maxZoom={3}
-            minZoom={1}
-        >
-            {/******************************* Chargement du plan image ******************************************************/}
-            <ImageOverlay
-                url={planZero}
-                bounds={limite}
-                className="custom-overlay"
-            />
+        <section className="h-auto">
+            <div className='flex h-auto'>
+                <div className ="flex-grow leaflet-container">
+                    <MapContainer
+                        center = {position}
+                        bounds={limite}
+                        maxBounds={limite}
+                        maxBoundsViscosity={1.0}
+                        style={{ height: "100%", width: "100%" }} 
+                        zoomControl={true}
+                        zoom={1}
+                        maxZoom={3}
+                        minZoom={1}
+                        //dragging = {false}
+                    >
+{/******************************* Chargement du plan image ******************************************************/}
+                    <ImageOverlay
+                        url={floors[currentFloor]}
+                        bounds={limite}
+                        className="custom-overlay"
+                    />
 
-            {/******************************** Mise en place des points *****************************************************/}
-            <Marker position={[187.5, 752]}>
-                <Popup>
-                    Blablablablabla
-                </Popup>
-            </Marker>
-        </MapContainer>
+{/******************************** Mise en place des points *****************************************************/}
+                {markers[currentFloor].map((marker, index) => (
+                    <Marker key={index} position={marker.position} icon={customIcon}>
+                        <Popup>{marker.popup}</Popup>
+                    </Marker>
+                ))}
+
+                    <ZoomControlDrag minZoom={1} maxZoom={3} />
+                    <ResetViewOnZoom initialCenter={position} initialZoom={initialZoom} />
+
+                    </MapContainer>
+                </div>
+                <div className="w-32 sm:w-64">
+                    <SideBar setCurrentFloor={setCurrentFloor} />
+                </div>
+
+            </div>
+        </section>
+        
+
     );
-}
+};
 
 export default BuildMap;
